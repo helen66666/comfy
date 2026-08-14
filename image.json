@@ -1,0 +1,338 @@
+{
+	"id": "44176d9a-3870-485b-86cf-e6e118e8c816",
+	"revision": 0,
+	"last_node_id": 9,
+	"last_link_id": 9,
+	"nodes": [{
+		"id": 5,
+		"type": "EmptyLatentImage",
+		"pos": [64.5555555555555, 1125.5555555555559],
+		"size": [270, 106],
+		"flags": {},
+		"order": 0,
+		"mode": 0,
+		"inputs": [{
+			"localized_name": "宽度",
+			"name": "width",
+			"type": "INT",
+			"widget": {
+				"name": "width"
+			},
+			"link": null
+		}, {
+			"localized_name": "高度",
+			"name": "height",
+			"type": "INT",
+			"widget": {
+				"name": "height"
+			},
+			"link": null
+		}, {
+			"localized_name": "批量大小",
+			"name": "batch_size",
+			"type": "INT",
+			"widget": {
+				"name": "batch_size"
+			},
+			"link": null
+		}],
+		"outputs": [{
+			"localized_name": "Latent",
+			"name": "LATENT",
+			"type": "LATENT",
+			"links": [1]
+		}],
+		"properties": {
+			"cnr_id": "comfy-core",
+			"ver": "0.32.0",
+			"Node name for S&R": "EmptyLatentImage"
+		},
+		"widgets_values": [720, 1080, 1]
+	}, {
+		"id": 2,
+		"type": "CLIPTextEncode",
+		"pos": [365.1111111111111, 715.5555555555557],
+		"size": [400, 200],
+		"flags": {},
+		"order": 4,
+		"mode": 0,
+		"inputs": [{
+			"localized_name": "clip",
+			"name": "clip",
+			"type": "CLIP",
+			"link": 4
+		}, {
+			"localized_name": "文本",
+			"name": "text",
+			"type": "STRING",
+			"widget": {
+				"name": "text"
+			},
+			"link": null
+		}],
+		"outputs": [{
+			"localized_name": "条件",
+			"name": "CONDITIONING",
+			"type": "CONDITIONING",
+			"links": [6]
+		}],
+		"properties": {
+			"cnr_id": "comfy-core",
+			"ver": "0.32.0",
+			"Node name for S&R": "CLIPTextEncode"
+		},
+		"widgets_values": ["text, watermark"]
+	}, {
+		"id": 3,
+		"type": "CheckpointLoaderSimple",
+		"pos": [-162.72880859375013, 562.2222222222222],
+		"size": [273.4576171875, 98],
+		"flags": {},
+		"order": 1,
+		"mode": 0,
+		"inputs": [{
+			"localized_name": "Checkpoint名称",
+			"name": "ckpt_name",
+			"type": "COMBO",
+			"widget": {
+				"name": "ckpt_name"
+			},
+			"link": null
+		}],
+		"outputs": [{
+			"localized_name": "模型",
+			"name": "MODEL",
+			"type": "MODEL",
+			"links": [2]
+		}, {
+			"localized_name": "CLIP",
+			"name": "CLIP",
+			"type": "CLIP",
+			"links": [3, 4]
+		}, {
+			"localized_name": "VAE",
+			"name": "VAE",
+			"type": "VAE",
+			"links": [9]
+		}],
+		"properties": {
+			"cnr_id": "comfy-core",
+			"ver": "0.32.0",
+			"Node name for S&R": "CheckpointLoaderSimple"
+		},
+		"widgets_values": ["waiIllustriousSDXL_v170.safetensors"]
+	}, {
+		"id": 8,
+		"type": "VAEDecode",
+		"pos": [1216.222222222222, 482.2222222222224],
+		"size": [140, 46],
+		"flags": {},
+		"order": 6,
+		"mode": 0,
+		"inputs": [{
+			"localized_name": "Latent",
+			"name": "samples",
+			"type": "LATENT",
+			"link": 7
+		}, {
+			"localized_name": "vae",
+			"name": "vae",
+			"type": "VAE",
+			"link": 9
+		}],
+		"outputs": [{
+			"localized_name": "图像",
+			"name": "IMAGE",
+			"type": "IMAGE",
+			"links": [8]
+		}],
+		"properties": {
+			"cnr_id": "comfy-core",
+			"ver": "0.32.0",
+			"Node name for S&R": "VAEDecode"
+		}
+	}, {
+		"id": 4,
+		"type": "PreviewImage",
+		"pos": [1433.9999999999986, 447.77777777777754],
+		"size": [416.6666666666665, 600.4444444444445],
+		"flags": {},
+		"order": 7,
+		"mode": 0,
+		"inputs": [{
+			"localized_name": "图像",
+			"name": "images",
+			"type": "IMAGE",
+			"link": 8
+		}],
+		"outputs": [{
+			"localized_name": "images",
+			"name": "images",
+			"type": "IMAGE",
+			"links": null
+		}],
+		"properties": {
+			"cnr_id": "comfy-core",
+			"ver": "0.32.0",
+			"Node name for S&R": "PreviewImage"
+		},
+		"widgets_values": []
+	}, {
+		"id": 6,
+		"type": "KSampler",
+		"pos": [847.888888888889, 485.5555555555554],
+		"size": [265.0413223140497, 345.4710743801653],
+		"flags": {},
+		"order": 5,
+		"mode": 0,
+		"inputs": [{
+			"localized_name": "模型",
+			"name": "model",
+			"type": "MODEL",
+			"link": 2
+		}, {
+			"localized_name": "正面条件",
+			"name": "positive",
+			"type": "CONDITIONING",
+			"link": 5
+		}, {
+			"localized_name": "负面条件",
+			"name": "negative",
+			"type": "CONDITIONING",
+			"link": 6
+		}, {
+			"localized_name": "Latent图像",
+			"name": "latent_image",
+			"type": "LATENT",
+			"link": 1
+		}, {
+			"localized_name": "种子",
+			"name": "seed",
+			"type": "INT",
+			"widget": {
+				"name": "seed"
+			},
+			"link": null
+		}, {
+			"localized_name": "步数",
+			"name": "steps",
+			"type": "INT",
+			"widget": {
+				"name": "steps"
+			},
+			"link": null
+		}, {
+			"localized_name": "cfg",
+			"name": "cfg",
+			"type": "FLOAT",
+			"widget": {
+				"name": "cfg"
+			},
+			"link": null
+		}, {
+			"localized_name": "采样器名称",
+			"name": "sampler_name",
+			"type": "COMBO",
+			"widget": {
+				"name": "sampler_name"
+			},
+			"link": null
+		}, {
+			"localized_name": "调度器",
+			"name": "scheduler",
+			"type": "COMBO",
+			"widget": {
+				"name": "scheduler"
+			},
+			"link": null
+		}, {
+			"localized_name": "降噪",
+			"name": "denoise",
+			"type": "FLOAT",
+			"widget": {
+				"name": "denoise"
+			},
+			"link": null
+		}],
+		"outputs": [{
+			"localized_name": "Latent",
+			"name": "LATENT",
+			"type": "LATENT",
+			"links": [7]
+		}],
+		"properties": {
+			"cnr_id": "comfy-core",
+			"ver": "0.32.0",
+			"Node name for S&R": "KSampler"
+		},
+		"widgets_values": [962192360678916, "randomize", 20, 8, "euler", "simple", 1]
+	}, {
+		"id": 1,
+		"type": "CLIPTextEncode",
+		"pos": [369.55555555555526, 443.33333333333326],
+		"size": [400, 200],
+		"flags": {},
+		"order": 3,
+		"mode": 0,
+		"inputs": [{
+			"localized_name": "clip",
+			"name": "clip",
+			"type": "CLIP",
+			"link": 3
+		}, {
+			"localized_name": "文本",
+			"name": "text",
+			"type": "STRING",
+			"widget": {
+				"name": "text"
+			},
+			"link": null
+		}],
+		"outputs": [{
+			"localized_name": "条件",
+			"name": "CONDITIONING",
+			"type": "CONDITIONING",
+			"links": [5]
+		}],
+		"properties": {
+			"cnr_id": "comfy-core",
+			"ver": "0.32.0",
+			"Node name for S&R": "CLIPTextEncode"
+		},
+		"widgets_values": ["(aged up:1.0–2.0),full nelson anal"]
+	}, {
+		"id": 9,
+		"type": "Note",
+		"pos": [-166.52347107438007, 755.792102846648],
+		"size": [211.90082644628103, 126.11570247933878],
+		"flags": {},
+		"order": 2,
+		"mode": 0,
+		"inputs": [],
+		"outputs": [],
+		"properties": {},
+		"widgets_values": ["(aged up:1.0–2.0) 年龄增加\n(mature female:1.0–2.0) 熟女"],
+		"color": "#432",
+		"bgcolor": "#653"
+	}],
+	"links": [
+		[1, 5, 0, 6, 3, "LATENT"],
+		[2, 3, 0, 6, 0, "MODEL"],
+		[3, 3, 1, 1, 0, "CLIP"],
+		[4, 3, 1, 2, 0, "CLIP"],
+		[5, 1, 0, 6, 1, "CONDITIONING"],
+		[6, 2, 0, 6, 2, "CONDITIONING"],
+		[7, 6, 0, 8, 0, "LATENT"],
+		[8, 8, 0, 4, 0, "IMAGE"],
+		[9, 3, 2, 8, 1, "VAE"]
+	],
+	"groups": [],
+	"config": {},
+	"extra": {
+		"ds": {
+			"scale": 1.2100000000000002,
+			"offset": [565.6970247933883, -196.28797061524304]
+		}
+	},
+	"version": 0.4
+}
