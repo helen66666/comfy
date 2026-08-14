@@ -15,6 +15,11 @@ DOWNLOADS=(
     "Small_Penis_Blowjob.safetensors|https://civitai.red/api/download/models/1140643?fileId=1045604|ComfyUI/models/loras/position"
 )
 
+# ═══════════════════════════════════════════════════════════
+# !! 替换为你的 CivitAI Token !!
+# ═══════════════════════════════════════════════════════════
+CIVITAI_TOKEN="2ce0130a5f5d8484453ee7aa647badb7"
+
 # ── 目录配置 ────────────────────────────────────────────────
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 WORKSPACE="$SCRIPT_DIR/workspace"          # 固定工作目录：脚本同级的 workspace/
@@ -51,21 +56,23 @@ for item in "${DOWNLOADS[@]}"; do
     # 下载（优先用 curl，回退到 wget）
     if command -v curl &>/dev/null; then
         if curl -L --progress-bar --retry 3 --retry-delay 2 \
+                -H "Authorization: Bearer $CIVITAI_TOKEN" \
                 --output "$DEST" "$URL"; then
             echo "✓ 完成"
-            ((SUCCESS++))
+            SUCCESS=$((SUCCESS + 1))
         else
             echo "✗ 失败" >&2
-            ((FAILED++))
+            FAILED=$((FAILED + 1))
         fi
     elif command -v wget &>/dev/null; then
         if wget --show-progress --tries=3 --waitretry=2 \
+                --header="Authorization: Bearer $CIVITAI_TOKEN" \
                 -O "$DEST" "$URL"; then
             echo "✓ 完成"
-            ((SUCCESS++))
+            SUCCESS=$((SUCCESS + 1))
         else
             echo "✗ 失败" >&2
-            ((FAILED++))
+            FAILED=$((FAILED + 1))
         fi
     else
         echo "错误: 找不到 curl 或 wget，请先安装其中之一。" >&2
