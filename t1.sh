@@ -34,7 +34,7 @@ if ! command -v hf &>/dev/null; then
 fi
 
 # 检查是否已登录（尝试执行 whoami 命令）
-if ! hf whoami &>/dev/null; then
+if ! hf auth whoami &>/dev/null; then
     echo "警告: 未登录 Hugging Face，私有/门控仓库可能无法下载" >&2
     echo "  请先运行: hf login" >&2
 fi
