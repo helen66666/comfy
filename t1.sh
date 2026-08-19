@@ -19,6 +19,7 @@ DOWNLOADS=(
     "Comfy-Org/z_image|ae.safetensors|ComfyUI/models/vae|"
     "cbmai/comfy|ClothesRemover.safetensors|ComfyUI/models/loras|"
     
+    
 )
 
 # ── 目录配置 ────────────────────────────────────────────────
