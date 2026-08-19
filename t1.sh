@@ -18,7 +18,7 @@ DOWNLOADS=(
     "Comfy-Org/stable-diffusion-3.5-fp8|clip_l.safetensors|ComfyUI/models/clip|"
     "Comfy-Org/z_image|ae.safetensors|ComfyUI/models/vae|"
     "cbmai/comfy|ClothesRemover.safetensors|ComfyUI/models/loras|"
-
+    
 )
 
 # ── 目录配置 ────────────────────────────────────────────────
