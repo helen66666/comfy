@@ -62,6 +62,9 @@ for item in "${DOWNLOADS[@]}"; do
     # 确保下载目录存在
     mkdir -p "$DOWNLOAD_DIR"
 
+    # 创建临时下载目录
+    TEMP_DIR=$(mktemp -d)
+
     echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
     echo "[$((SUCCESS + FAILED + 1))/${#DOWNLOADS[@]}] $REPO_ID"
     echo "文件: ${FILENAME:-<整个仓库>}"
@@ -84,8 +87,8 @@ for item in "${DOWNLOADS[@]}"; do
         fi
     fi
 
-    # 指定保存目录
-    CMD+=(--local-dir "$DOWNLOAD_DIR")
+    # 下载到临时目录
+    CMD+=(--local-dir "$TEMP_DIR")
 
     # 如果指定了仓库类型
     if [[ -n "$REPO_TYPE" ]]; then
@@ -94,9 +97,13 @@ for item in "${DOWNLOADS[@]}"; do
 
     # 执行下载
     if "${CMD[@]}"; then
+        # 移动文件到目标目录（扁平化，不保留子目录结构）
+        find "$TEMP_DIR" -type f -exec mv {} "$DOWNLOAD_DIR/" \;
+        rm -rf "$TEMP_DIR"
         echo "✓ 完成"
         SUCCESS=$((SUCCESS + 1))
     else
+        rm -rf "$TEMP_DIR"
         echo "✗ 失败" >&2
         FAILED=$((FAILED + 1))
     fi
