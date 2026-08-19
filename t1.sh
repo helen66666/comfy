@@ -13,10 +13,10 @@ set -euo pipefail
 # - 保存路径: 留空则使用 workspace/，否则保存到指定目录
 # - repo类型: 留空默认 model，可选 dataset/space
 DOWNLOADS=(
-    "Comfy-Org/flux1-kontext-dev_ComfyUI|flux1-dev-kontext_fp8_scaled.safetensors|ComfyUI/models/unet|"
-    "Comfy-Org/stable-diffusion-3.5-fp8|t5xxl_fp8_e4m3fn_scaled.safetensors|ComfyUI/models/clip|"
-    "Comfy-Org/stable-diffusion-3.5-fp8|clip_l.safetensors|ComfyUI/models/clip|"
-    "Comfy-Org/z_image|ae.safetensors|ComfyUI/models/vae|"
+    "Comfy-Org/flux1-kontext-dev_ComfyUI|split_files/diffusion_models/flux1-dev-kontext_fp8_scaled.safetensors|ComfyUI/models/unet|"
+    "Comfy-Org/stable-diffusion-3.5-fp8|text_encoders/t5xxl_fp8_e4m3fn_scaled.safetensors|ComfyUI/models/clip|"
+    "Comfy-Org/stable-diffusion-3.5-fp8|text_encoders/clip_l.safetensors|ComfyUI/models/clip|"
+    "Comfy-Org/z_image|split_files/vae/ae.safetensors|ComfyUI/models/vae|"
     "cbmai/comfy|ClothesRemover.safetensors|ComfyUI/models/loras|"
     
     
